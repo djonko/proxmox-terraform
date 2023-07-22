@@ -1,20 +1,20 @@
-resource "proxmox_vm_qemu" "create_nodes" {
-    count = 5
-    name = "${var.servers[count.index].name}"
+resource "proxmox_vm_qemu" "create_a_vm" {
+    count = 1
+    name = var.a_server.name
     desc = "ubuntu server"
-    vmid = "${710+count.index}"
+    vmid = var.a_server.id
     target_node = "pve02"
     agent = 1
     clone = "ubuntu2304-qcwo2"
-    cores = 2
+    cores = 1
     sockets = 1
     cpu = "kvm64"
-    memory = 5120
+    memory = 1024
     scsihw = "virtio-scsi-pci"
     os_type = "cloud-init"
     ciuser = var.vm_ciuser
     cipassword = var.vm_cipwd
-    tags = "ks3"
+    tags = "proxy vpn media"
     automatic_reboot = true
 
 
@@ -24,7 +24,7 @@ resource "proxmox_vm_qemu" "create_nodes" {
     }
 
     disk {
-        storage = "local"
+        storage = "pve-vms"
         type = "scsi"
         size = "10G"
         ssd = 1
@@ -32,7 +32,7 @@ resource "proxmox_vm_qemu" "create_nodes" {
 
     }
 
-    ipconfig0 = "ip=${var.servers[count.index].ip}/24,gw=192.168.20.1"
+    ipconfig0 = "ip=${var.a_server.ip}/24,gw=192.168.20.1"
     nameserver = "192.168.20.2"
     searchdomain = "ui24.mywire.com"
 
