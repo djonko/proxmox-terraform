@@ -18,6 +18,16 @@ variable "proxmox_api_token_id" {
   sensitive = true
 }
 
+variable "pm_user" {
+  type = string
+  sensitive = true
+}
+
+variable "pm_password" {
+  type = string
+  sensitive = true
+}
+
 variable "proxmox_api_token_secret" {
   type      = string
   sensitive = true
@@ -65,9 +75,11 @@ variable servers {
 
 provider "proxmox" {
   pm_api_url          = var.proxmox_api_url
-  pm_api_token_secret = var.proxmox_api_token_secret
-  pm_api_token_id     = var.proxmox_api_token_id
+  //pm_api_token_secret = var.proxmox_api_token_secret
+  //pm_api_token_id     = var.proxmox_api_token_id
   pm_tls_insecure     = true
+  pm_user = var.pm_user
+  pm_password = var.pm_password
 }
 
 variable a_server {
@@ -78,7 +90,7 @@ variable a_server {
   })
   default = {
     id   = 607
-    name = "gluetunnel"
+    name = "gluetun"
     ip   = "192.168.20.34"
   }
 }
