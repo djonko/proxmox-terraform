@@ -77,8 +77,8 @@ variable a_server {
     ip   = string
   })
   default = {
-    id   = 704
+    id   = 607
     name = "gluetunnel"
-    ip   = "192.168.20.33"
+    ip   = "192.168.20.34"
   }
 }
