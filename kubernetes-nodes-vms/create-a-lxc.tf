@@ -7,6 +7,7 @@ resource "proxmox_lxc" "create_a_lxc" {
     unprivileged = true
     memory = 1024
     nameserver = "192.168.20.2"
+    searchdomain = "ui24.mywire.com"
     description = "debian 12.01 lxc container"
     vmid = var.a_server.id
     cores = 1
