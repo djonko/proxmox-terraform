@@ -1,21 +1,22 @@
 resource "proxmox_vm_qemu" "create_nodes" {
-    count = 5
-    name = "${var.servers[count.index].name}"
-    desc = "ubuntu server"
-    vmid = "${710+count.index}"
-    target_node = "pve02"
+    count = 6
+    name = var.servers[count.index].name
+    desc = "debian server"
+    vmid = var.servers[count.index].vmid
+    target_node = "pve-aria"
     agent = 1
-    clone = "ubuntu2304-qcwo2"
-    cores = 2
+    clone = "debian12-cloud"
+    cores = var.servers[count.index].cpu
     sockets = 1
-    cpu = "kvm64"
-    memory = 5120
+    memory = var.servers[count.index].ram
     scsihw = "virtio-scsi-pci"
     os_type = "cloud-init"
+    cpu = "kvm64"
     ciuser = var.vm_ciuser
     cipassword = var.vm_cipwd
-    tags = "ks3"
+    tags = var.servers[count.index].tags
     automatic_reboot = true
+
 
 
     network {
@@ -24,17 +25,17 @@ resource "proxmox_vm_qemu" "create_nodes" {
     }
 
     disk {
-        storage = "local"
+        storage = "pve-vms"
         type = "scsi"
-        size = "10G"
+        size = var.servers[count.index].disk
         ssd = 1
         format = "qcow2"
 
     }
 
-    ipconfig0 = "ip=${var.servers[count.index].ip}/24,gw=192.168.20.1"
-    nameserver = "192.168.20.2"
-    searchdomain = "ui24.mywire.com"
+    ipconfig0 = "ip=${var.servers[count.index].ip},gw=192.168.30.1"
+    nameserver = "192.168.30.2"
+    searchdomain = "sp1.theworkpc.com"
 
 
 }
