@@ -1,3 +1,4 @@
+
 resource "proxmox_vm_qemu" "create_nodes" {
     count = 6
     name = var.servers[count.index].name
