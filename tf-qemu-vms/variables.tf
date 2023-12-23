@@ -36,6 +36,32 @@ variable "vm_cipwd" {
   sensitive = true
 }
 
+variable "number_of_instances" {
+  type      = number
+  sensitive = true
+}
+variable "pve_target_node" {
+  type      = string
+  sensitive = true
+}
+variable "cloud_image_name" {
+  type      = string
+  sensitive = true
+}
+variable "cpu_type" {
+  type      = string
+  sensitive = true
+}
+variable "bridge_network_name" {
+  type      = string
+  sensitive = true
+}
+variable "pve_storage_disk_name" {
+  type      = string
+  sensitive = true
+}
+
+
 variable a_server {
   type = object({
     id   = number
