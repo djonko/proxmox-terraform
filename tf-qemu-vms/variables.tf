@@ -1,13 +1,3 @@
-variable "pm_user" {
-  type      = string
-  sensitive = true
-}
-
-variable "pm_password" {
-  type      = string
-  sensitive = true
-}
-
 variable "proxmox_api_url" {
   type = string
 }
@@ -65,33 +55,47 @@ variable "pve_storage_disk_name" {
   sensitive = true
 }
 
+variable "nameserver" {
+  type = string
+}
+variable "searchdomain" {
+  type = string
+}
+
 variable servers {
   type = list(object({
-    name        = string
-    ip          = string
-    vmid        = string
-    ram         = string
-    cpu         = string
-    disk        = string
-    disk_ssd    = number
-    disk_format = string
-    disk_backup = bool
-    macaddr     = string
-    tags        = string
+    name               = string
+    ip                 = string
+    ipconfig0          = string
+    vmid               = string
+    startup_onboot     = bool
+    startup_attributes = string
+    ram                = string
+    cpu                = string
+    disk               = string
+    disk_ssd           = number
+    disk_format        = string
+    disk_backup        = bool
+    macaddr            = string
+    tags               = string
+
   }))
   default = [
     {
-      name        = "rambert"
-      ip          = "192.168.30.7/24"
-      vmid        = "201"
-      ram         = "2048"
-      cpu         = "1"
-      disk        = "20G"
-      disk_ssd    = 1
-      disk_format = "qcow2"
-      disk_backup = true
-      macaddr     = ""
-      tags        = "p7"
+      name               = "xxxname"
+      ip                 = "192.168.12.7/24"
+      vmid               = "100"
+      startup_onboot     = true
+      startup_attributes = "order=1,up=0,down=0"
+      ipconfig0          = "ip=dhcp"
+      ram                = "1024"
+      cpu                = "1"
+      disk               = "10G"
+      disk_ssd           = 1
+      disk_format        = "qcow2"
+      disk_backup        = true
+      macaddr            = ""
+      tags               = "p7"
     }
   ]
 }

@@ -18,13 +18,22 @@ resource "proxmox_vm_qemu" "create_nodes" {
   cipassword       = var.vm_cipwd
   tags             = var.servers[count.index].tags
   automatic_reboot = false
-  ipconfig0 = "ip=dhcp"
+  ipconfig0        = var.servers[count.index].ipconfig0
+  onboot           = var.servers[count.index].startup_onboot
+  startup          = var.servers[count.index].startup_attributes
+  nameserver       = var.nameserver
+  searchdomain     = var.searchdomain
 
   network {
     bridge  = var.bridge_network_name
     model   = "virtio"
     macaddr = var.servers[count.index].macaddr
   }
+
+  /*
+  Comment the disk section because of the incompatibility between proxmox 8.1.3
+  and  "telmate/proxmox"
+  [Issue Report](https://github.com/Telmate/terraform-provider-proxmox/issues/887)
 
   disk {
     storage = var.pve_storage_disk_name
@@ -33,11 +42,6 @@ resource "proxmox_vm_qemu" "create_nodes" {
     ssd     = var.servers[count.index].disk_ssd
     format  = var.servers[count.index].disk_format
     backup  = var.servers[count.index].disk_backup
-  }
-
-  //ipconfig0    = "ip=${var.servers[count.index].ip},gw=192.168.30.1"
-  //nameserver   = "192.168.30.2"
-  //searchdomain = "sp1.theworkpc.com"
-
+  }*/
 }
 
