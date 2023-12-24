@@ -11,16 +11,6 @@ variable "proxmox_tls_insecure" {
   type = bool
 }
 
-variable "pm_user" {
-  type      = string
-  sensitive = true
-}
-
-variable "pm_password" {
-  type      = string
-  sensitive = true
-}
-
 variable "proxmox_api_token_secret" {
   type      = string
   sensitive = true
@@ -40,10 +30,12 @@ variable "number_of_instances" {
   type      = number
   sensitive = true
 }
+
 variable "pve_target_node" {
   type      = string
   sensitive = true
 }
+
 variable "cloud_image_name" {
   type      = string
   sensitive = true
@@ -52,29 +44,16 @@ variable "cpu_type" {
   type      = string
   sensitive = true
 }
+
 variable "bridge_network_name" {
   type      = string
   sensitive = true
 }
+
 variable "pve_storage_disk_name" {
   type      = string
   sensitive = true
 }
-
-
-variable a_server {
-  type = object({
-    id   = number
-    name = string
-    ip   = string
-  })
-  default = {
-    id   = 607
-    name = "gluetun"
-    ip   = "192.168.20.34"
-  }
-}
-
 
 variable servers {
   type = list(object({
@@ -102,7 +81,7 @@ variable servers {
       disk_format = "qcow2"
       disk_backup = true
       macaddr     = ""
-      tags        = "p7 debian dashboard portainer"
+      tags        = "p7"
     }
   ]
 }
