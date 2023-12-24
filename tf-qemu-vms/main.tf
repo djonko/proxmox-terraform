@@ -10,12 +10,15 @@ resource "proxmox_vm_qemu" "create_nodes" {
   sockets          = 1
   memory           = var.servers[count.index].ram
   scsihw           = "virtio-scsi-pci"
+  bootdisk         = "scsi0"
+  boot             = "cd"
   os_type          = "cloud-init"
   cpu              = var.cpu_type
   ciuser           = var.vm_ciuser
   cipassword       = var.vm_cipwd
   tags             = var.servers[count.index].tags
-  automatic_reboot = true
+  automatic_reboot = false
+  ipconfig0 = "ip=dhcp"
 
   network {
     bridge  = var.bridge_network_name
